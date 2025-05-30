@@ -1,22 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Firebase Push Notification Demo</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Firebase Push Notifications Demo</title>
 </head>
 <body>
-  <div id="notification-popup" class="popup-overlay hidden">
-    <div class="popup-box">
-      <h2>Enable Notifications</h2>
-      <p>Would you like to receive updates and alerts?</p>
-      <div class="popup-buttons">
-        <button class="popup-btn allow" id="btn-allow">Allow</button>
-        <button class="popup-btn reject" id="btn-reject">Reject</button>
-      </div>
-    </div>
-  </div>
-  <script type="module" src="script.js"></script>
+  <h1>Firebase Push Notifications Demo</h1>
+  <p>If you allow notifications, you'll receive them in your browser.</p>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+    import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-messaging.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBCPT6Qh34Tf0mWAO5_eOR6lDAHb6j1D6g",
+      authDomain: "notifications-tnt.firebaseapp.com",
+      projectId: "notifications-tnt",
+      storageBucket: "notifications-tnt.appspot.com",
+      messagingSenderId: "359459171286",
+      appId: "1:359459171286:web:6deba6412f1086f56b1277",
+      measurementId: "G-GJZ63Z8Q4R"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const messaging = getMessaging(app);
+
+    Notification.requestPermission().then((permission) => {
+      if (permission === "granted") {
+        getToken(messaging, {
+          vapidKey: "BI-WCQzg2MUYk-1Tyb3T2aN0APjsaI2ZCi9iCSUZ22HWTo4KKD9PwS-i51Z_XnY0IB6D9Nb0AxnyhGDTo_dKpic"
+        }).then((token) => {
+          console.log("FCM Token:", token);
+        }).catch((err) => {
+          console.error("Error getting token", err);
+        });
+      }
+    });
+
+    onMessage(messaging, (payload) => {
+      console.log("Message received. ", payload);
+      alert(payload.notification.title + ": " + payload.notification.body);
+    });
+  </script>
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/firebase-messaging-sw.js")
+        .then((registration) => {
+          console.log("Service Worker registered:", registration);
+        }).catch((err) => {
+          console.error("Service Worker registration failed:", err);
+        });
+    }
+  </script>
 </body>
 </html>
