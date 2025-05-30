@@ -1,0 +1,82 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #010000;
+  color: #fff;
+  height: 100%;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.popup-box {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border-radius: 1rem;
+  border: 1px solid #f5f5dc;
+  box-shadow: 0 0 10px #f5f5dc, 0 0 25px rgba(245, 245, 220, 0.4);
+  padding: 2rem;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+}
+
+.popup-box h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.popup-box p {
+  color: #ccc;
+  margin: 1rem 0 2rem;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.popup-btn {
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.popup-btn.allow {
+  background-color: #2ecc71;
+  color: #000;
+}
+
+.popup-btn.allow:hover {
+  background-color: #27ae60;
+}
+
+.popup-btn.reject {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.popup-btn.reject:hover {
+  background-color: #c0392b;
+}
+
+.hidden {
+  display: none;
+}
